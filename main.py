@@ -28,7 +28,12 @@ def obtener_ofertas_dia():
 
 def obtener_ofertas_carrefour():
     url = "https://www.carrefour.es/supermercado/ofertas"
-    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "es-ES,es;q=0.9",
+        "Referer": "https://www.google.com/"
+    }
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
     
     ofertas = []
@@ -50,7 +55,12 @@ def obtener_ofertas_carrefour():
 
 def obtener_ofertas_alcampo():
     url = "https://www.alcampo.es/compra-online/ofertas"
-    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept-Language": "es-ES,es;q=0.9",
+        "Referer": "https://www.google.com/"
+    }
+    response = requests.get(url, headers=headers, allow_redirects=True)
     soup = BeautifulSoup(response.text, "html.parser")
     
     ofertas = []
