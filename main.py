@@ -35,7 +35,7 @@ def obtener_ofertas_carrefour():
         "Accept-Language": "es-ES,es;q=0.9",
         "Referer": "https://www.google.com/"
     }
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, allow_redirects=True)
     soup = BeautifulSoup(response.text, "html.parser")
     
     ofertas = []
