@@ -7,7 +7,8 @@ app = FastAPI()
 
 def obtener_ofertas_dia():
     url = "https://www.dia.es/ofertas"
-    response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+    response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.text, "html.parser")
     
     ofertas = []
@@ -96,8 +97,6 @@ def leer_ofertas():
     ofertas.extend(obtener_ofertas_carrefour())
     ofertas.extend(obtener_ofertas_alcampo())
     return ofertas
-
-
 import os
 
 @app.get("/test-connection")
