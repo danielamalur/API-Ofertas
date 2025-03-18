@@ -97,6 +97,7 @@ def leer_ofertas():
     ofertas.extend(obtener_ofertas_carrefour())
     ofertas.extend(obtener_ofertas_alcampo())
     return ofertas
+
 import os
 
 @app.get("/test-connection")
