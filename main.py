@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
 
 app = FastAPI()
 
@@ -28,13 +31,16 @@ def obtener_ofertas_dia():
 
 def obtener_ofertas_carrefour():
     url = "https://www.carrefour.es/supermercado/ofertas"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept-Language": "es-ES,es;q=0.9",
-        "Referer": "https://www.google.com/"
-    }
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, "html.parser")
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(options=options)
+    driver.get(url)
+    time.sleep(5)  # Espera para cargar dinámicamente el contenido
+    
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    driver.quit()
     
     ofertas = []
     productos = soup.select(".offer-card")  # Ajustar según estructura real
@@ -95,6 +101,7 @@ def leer_ofertas():
     ofertas.extend(obtener_ofertas_carrefour())
     ofertas.extend(obtener_ofertas_alcampo())
     return ofertas
+
 import os
 
 @app.get("/test-connection")
