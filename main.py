@@ -85,3 +85,19 @@ def leer_ofertas():
     ofertas.extend(obtener_ofertas_carrefour())
     ofertas.extend(obtener_ofertas_alcampo())
     return ofertas
+import os
+
+@app.get("/test-connection")
+def test_connection():
+    try:
+        dia_response = os.popen("curl -I https://www.dia.es").read()
+        carrefour_response = os.popen("curl -I https://www.carrefour.es").read()
+        alcampo_response = os.popen("curl -I https://www.alcampo.es").read()
+
+        return {
+            "DIA": dia_response,
+            "Carrefour": carrefour_response,
+            "Alcampo": alcampo_response
+        }
+    except Exception as e:
+        return {"error": str(e)}
